@@ -1,19 +1,26 @@
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import React from 'react'
-import WelcomeToArtSci from './routes/home/WelcomeToArtSci'
-//const WelcomeToArtSci = lazy(() => import('./routes/home/WelcomeToArtSci'))
+import React, {Suspense, lazy} from 'react'
+import LoadingOverlay from './application/loadingOverlay/LoadingOverlay'
+
+const WelcomeToArtSci = lazy(() => import('./routes/home/WelcomeToArtSci'))
 
 const App = () => (
   // <ErrorBoundary>
     <BrowserRouter>
-      <Switch>
-        <Route
-          component={WelcomeToArtSci}
-          exact
-          path='/welcome'
-        />
-        </Switch>
+      <Suspense
+        fallback={
+          <LoadingOverlay/>
+        }
+      >
+        <Switch>
+          <Route
+            component={WelcomeToArtSci}
+            exact
+            path='/welcome'
+          />
+          </Switch>
+        </Suspense>
     </BrowserRouter>
   // </ErrorBoundary>
 )
